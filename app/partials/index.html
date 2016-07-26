@@ -1,0 +1,39 @@
+<div class="container-fluid">
+    <div class="product-container">
+        <div class="row">
+            <a href="#/addNewProduct" class="pull-right btn btn-primary">Add New Product</a>
+        </div>
+        <div class="row">
+            <div ng-repeat=" product in products track by $index">
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail common-size">
+                        <img ng-src="{{product.imageUrl}}" alt="...">
+                        <div class="caption">
+                            <span class="row">
+                            	<span>{{product.name}}</span>
+                            <span class="blue">{{ product.price | currency:'&#8360' }}</span>
+                            </span>
+                            <div class="small-padding">
+                                <span>
+                                	<a href="#" class="glyphicon glyphicon-eye-open">
+                                	</a>
+                                		View
+                                </span>
+                                <span class="padding-left">
+                                	<a href="#" class="glyphicon glyphicon-edit">                      
+	                                </a>
+	                                  Edit
+                                </span>
+
+                                <button class="btn pull-right btn-primary btn-xs">
+                                    <i class="glyphicon glyphicon-shopping-cart"></i> Add to Cart
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+[{
+        "id": 6,
+        "name": "Samsung Galaxy Tab",
+        "Description": "Samsung",
+        "imageUrl": "assets/images/sony-xperia.png",
+        "price": 10000
+    }, {
+        "id": 7,
+        "name": "Sony Xperia",
+        "Description": "Sony ",
+        "imageUrl": "assets/images/sony-xperia2.png",
+        "price": 20000
+    }
+
+]
