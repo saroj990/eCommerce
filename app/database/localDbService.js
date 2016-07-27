@@ -1,37 +1,5 @@
 angular.module('localDbService', []).
-factory("localDbService", ["$indexedDB", "$q", "$log", "Guid", function ($indexedDB, $q, $log, Guid) {
-
-  var addNewProduct = function (product) {
-    try {
-      var deferred = $q.defer();
-      if (!product) {
-        return;
-      }
-      $indexedDB.openStore("products", function (store) {
-
-        store.insert({
-          "id": Guid.newGuid(),
-          "name": product.name,
-          "description": product.description,
-          "price": product.price,
-          "sku": product.sku,
-          "likes": 0,
-          "shares": 0,
-          "companyId": 1
-        }).then(function (response) {
-          $log.info("Product was added successfully!!")
-          deferred.resolve(true)
-        }, function (error) {
-          $log.error("There was some error")
-          deferred.reject(error)
-        });
-      });
-    } catch (error) {
-      // errorHandler.handleError(error);
-
-    }
-    return deferred.promise;
-  };
+factory("localDbService", ["$indexedDB", "$q", "$log", "Guid", "$timeout", function ($indexedDB, $q, $log, Guid, $timeout) {
 
 
   var addUser = function (user) {
@@ -58,6 +26,8 @@ factory("localDbService", ["$indexedDB", "$q", "$log", "Guid", function ($indexe
     $indexedDB.openStore("users", function (store) {
       return findItem("users", "email", user.email).then(
         function (response) {
+          $log.info("authenticate user");
+          $log.info(response);
           deferred.resolve(response);
         },
         function (error) {
@@ -75,13 +45,14 @@ factory("localDbService", ["$indexedDB", "$q", "$log", "Guid", function ($indexe
         deferred.resolve(null);
       }
       $indexedDB.openStore(storeName, function (store) {
-        store.findWhere(store.query().$index(keyName).$eq(KeyValue))
-          .then(function (results) {
-            deferred.resolve(results);
+        store.findWhere(store.query().$index(keyName).$eq(KeyValue)).then(
+          function (data) {
+            $log.info("result from find method");
+            $log.info(data);
+            deferred.resolve(data);
 
-          }, function (error) {
-            deferred.reject(error);
-          });
+          },
+          function (error) {});
       });
 
     } catch (error) {
@@ -113,7 +84,8 @@ factory("localDbService", ["$indexedDB", "$q", "$log", "Guid", function ($indexe
       store.insert({
         "id": Guid.newGuid(),
         "cartId": cartId,
-        "productId": productId
+        "productId": productId,
+        "quantity": 1
       }).then(function (response) {
         deferred.resolve(response);
       }, function (error) {
@@ -136,12 +108,129 @@ factory("localDbService", ["$indexedDB", "$q", "$log", "Guid", function ($indexe
     return deferred.promise;
   }
 
+  var checkIfCartExist = function (userId) {
+    var deferred = $q.defer();
+    var status = false;
+
+    findItem("carts", "userId", userId).then(
+      function (items) {
+        if (items.count) {
+          status = true
+        }
+        deferred.resolve(status);
+      },
+      function (error) {
+        deferred.resolve(error)
+      });
+    return deferred.promise;
+  }
+
+  var addSampleProducts = function (products) {
+    var deferred = $q.defer();
+    var i = 0;
+    if (!products.length) {
+      deferred.resolve(false)
+    }
+
+    for (; i < products.length; i++) {
+      addNewProduct(products[i]);
+    }
+
+    $timeout(function () {
+      deferred.resolve(true);
+    }, 1000 * products.length)
+
+    return deferred.promise;
+  }
+
+  var addNewProduct = function (product) {
+    try {
+      var deferred = $q.defer();
+
+      if (!product) {
+        return;
+      }
+      $indexedDB.openStore("products", function (store) {
+        store.insert({
+          "id": product.id,
+          "name": product.name,
+          "description": product.description,
+          "price": product.price,
+          "sku": product.sku,
+          "likes": product.likes,
+          "shares": product.shares,
+          "companyId": 1,
+          "imageUrl": product.imageUrl
+        }).then(function (response) {
+          $log.info("Product was added successfully!!")
+          deferred.resolve(true)
+        }, function (error) {
+          $log.error("There was some error")
+          deferred.reject(error)
+        });
+      });
+    } catch (error) {
+      $log.error(error);
+    }
+    return deferred.promise;
+  };
+
+  //Find a record based ob id value
+  function findItemById(objectStoreName, id) {
+    try {
+      var deferred = $q.defer();
+      $indexedDB.openStore(objectStoreName, function (store) {
+        store.find(id)
+          .then(function (result) {
+              deferred.resolve(result);
+            },
+            function (error) {
+              deferred.reject(error);
+            });
+      });
+
+    } catch (error) {
+      errorHandler.handleError(error);
+    }
+    return deferred.promise;
+  }
+
+  var getProduct = function (id) {
+    var deferred = $q.defer();
+    findItemById("products", id).then(
+      function (response) {
+        deferred.resolve(response);
+      },
+      function (error) {
+        deferred.reject(error);
+      })
+    return deferred.promise;
+  }
+  var getTotalCartItem = function (cartId) {
+    var deffered = $q.defer()
+    findItem("cartItems", "cartId", cartId).then(function (response) {
+        console.log("total cart item");
+        console.log(response)
+        deffered.resolve(response.length);
+      },
+      function (error) {
+        console.log(error);
+        deffered.reject(error);
+      })
+    return deffered.promise;
+  }
+
+
   return {
     addNewProduct: addNewProduct,
     addUser: addUser,
     authenticateUser: authenticateUser,
     createCart: createCart,
     creatCartLineItem: creatCartLineItem,
-    getCartItems: getCartItems
+    getCartItems: getCartItems,
+    checkIfCartExist: checkIfCartExist,
+    addSampleProducts: addSampleProducts,
+    getProduct: getProduct,
+    getTotalCartItem: getTotalCartItem
   }
 }])

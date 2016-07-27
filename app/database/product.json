@@ -1,15 +1,67 @@
 [{
-        "id": 6,
-        "name": "Samsung Galaxy Tab",
-        "Description": "Samsung",
-        "imageUrl": "assets/images/sony-xperia.png",
-        "price": 10000
+    "id": "1",
+    "name": "Samsung Galaxy Tab",
+    "Description": "Samsung",
+    "imageUrl": "assets/images/sony-xperia.png",
+    "price": 10000,
+    "sku": "ABC-123",
+    "likes": 0,
+    "shares": 0
     }, {
-        "id": 7,
-        "name": "Sony Xperia",
-        "Description": "Sony ",
-        "imageUrl": "assets/images/sony-xperia2.png",
-        "price": 20000
+    "id": "2",
+    "name": "Sony Xperia",
+    "Description": "Sony ",
+    "imageUrl": "assets/images/sony-xperia2.png",
+    "price": 20000,
+    "sku": "ABC-123",
+    "likes": 0,
+    "shares": 0
+    },
+  {
+    "id": "3",
+    "name": "Sony Xperia",
+    "Description": "Sony ",
+    "imageUrl": "assets/images/sony-xperia2.png",
+    "price": 20000,
+    "sku": "ABC-123",
+    "likes": 0,
+    "shares": 0
+    },
+  {
+    "id": "4",
+    "name": "Sony Xperia",
+    "Description": "Sony ",
+    "imageUrl": "assets/images/sony-xperia2.png",
+    "price": 20000,
+    "sku": "ABC-123",
+    "likes": 0,
+    "shares": 0
+    }, {
+    "id": "5",
+    "name": "Sony Xperia",
+    "Description": "Sony ",
+    "imageUrl": "assets/images/sony-xperia2.png",
+    "price": 20000,
+    "sku": "ABC-123",
+    "likes": 0,
+    "shares": 0
+    },
+  {
+    "id": "6",
+    "name": "Sony Xperia",
+    "Description": "Sony ",
+    "imageUrl": "assets/images/sony-xperia2.png",
+    "price": 20000,
+    "likes": 0,
+    "shares": 0
+    }, {
+    "id": "7",
+    "name": "Sony Xperia",
+    "Description": "Sony ",
+    "imageUrl": "assets/images/sony-xperia2.png",
+    "price": 20000,
+    "likes": 0,
+    "shares": 0
     }
 
 ]

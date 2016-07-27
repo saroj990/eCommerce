@@ -1,19 +1,30 @@
 <div class="container-fluid">
-  <table class="table table-striped">
+  <table class="table">
     <thead>
     </thead>
     <tbody>
-      <tr ng-repeat="item in cartItems">
-        <td><img src="assets/images/cart.png" height="15"></td>
-        <td>{{product.name}}</td>
+      <tr ng-repeat="item in cartItems" class="margin-top">
+        <td><img ng-src="{{item.imageUrl}}" height="50" width="50"></td>
+        <td>{{item.name}}</td>
         <td>
-          <select class="form-control flat-text-box">
+          <select class="form-control flat-text-box cart-drop-down" ng-model="item.quantity" ng-change="reCalculateTotalPrice(item.quantity)">
             <option>1</option>
             <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
           </select>
         </td>
-        <td> {{price}}
+        <td> {{(item.price* item.quantity)| currency:'&#8360'}}
         </td>
+        <td>
+          Total
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4"></td>
+        <td>Total:{{totalCartPrice}}</td>
       </tr>
     </tbody>
   </table>

@@ -7,8 +7,7 @@ controller("productCtrl", ["$scope", "$rootScope", "productService", "localDbSer
 
     var getProducts = function () {
       productService.getProducts().then(function (response) {
-        $scope.products = response.data
-
+        $scope.products = response.data;
       })
     }
 
@@ -29,14 +28,23 @@ controller("productCtrl", ["$scope", "$rootScope", "productService", "localDbSer
       localDbService.creatCartLineItem($rootScope.cartId, productId).then(
         function (response) {
           $log.info("item added to cart");
-          $rootScope.totalCartItems += 1;
         },
         function (error) {
           $log.error(error);
         })
     };
 
+    var addSampleProducts = function () {
+      if (!commonService.getLocalItem("productImported")) {
+        productService.addSampleProduct().then(function (response) {
+          $log.info("products were added successfully!!")
+          commonService.setLocalItem("productImported", true);
+        }, function (error) {
+          $log.error(error);
+        })
+      }
+    }
+    addSampleProducts();
     getProducts();
 
-    }
-]);
+    }]);

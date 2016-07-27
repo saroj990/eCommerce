@@ -1,75 +1,118 @@
 .blue {
-    color: blue;
+  color: blue;
 }
 
 .small-cart-icon {
-    height: 60px;
+  height: 60px;
 }
 
 .btn-circle {
-    width: 30px;
-    height: 30px;
-    text-align: center;
-    padding: 6px 0;
-    font-size: 12px;
-    line-height: 1.428571429;
-    border-radius: 15px;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
 }
 
 .btn-circle.btn-lg {
-    width: 50px;
-    height: 50px;
-    padding: 10px 16px;
-    font-size: 18px;
-    line-height: 1.33;
-    border-radius: 25px;
+  width: 50px;
+  height: 50px;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 25px;
 }
 
 .btn-circle.btn-xl {
-    width: 70px;
-    height: 70px;
-    padding: 10px 16px;
-    font-size: 24px;
-    line-height: 1.33;
-    border-radius: 35px;
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  font-size: 24px;
+  line-height: 1.33;
+  border-radius: 35px;
 }
 
 .small-padding {
-    padding-left: 5px;
-    padding-right: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .padding-left {
-    padding-left: 5px;
+  padding-left: 5px;
 }
 
 .margin-top {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .flat-text-box {
-    display: block;
-    height: 32px;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #555;
-    background-color: #fff;
-    background-image: none;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  display: block;
+  height: 32px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 
 .thin-text {
-    font-size: 15px;
-    font-family: Arial;
-    font-weight: 100;
+  font-size: 15px;
+  font-family: Arial;
+  font-weight: 100;
 }
 
 .header-margin {
-    margin-top: 65px;
+  margin-top: 65px;
+}
+
+.left-align {
+  width: 350px;
+  margin-left: 10px;
+}
+
+.img-responsive,
+.thumbnail > img,
+.thumbnail a > img,
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+  display: block;
+  max-width: 99%;
+  height: 150px;
+}
+
+.common-size {
+  width: 250px;
+}
+
+.cart-drop-down {
+  width: 70px;
+}
+
+.ng-touched.ng-invalid-required {
+  border-color: #f0ad4e;
+}
+
+.ng-dirty.ng-invalid {
+  border-color: #f0ad4e;
+}
+
+.ng-submitted input.ng-invalid {
+  border-color: #f0ad4e;
+}
+
+.ng-submitted select.ng-invalid {
+  border-color: #f0ad4e;
+}
+
+.error {
+  color: #f0ad4e;
 }
