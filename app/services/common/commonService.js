@@ -22,7 +22,6 @@ factory("commonService", ["localDbService", "$location", function(localDbService
     }
 
     var deleteLocalItem = function(key) {
-        debugger
         localStorage.removeItem('isAlive');
     }
 

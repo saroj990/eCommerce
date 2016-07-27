@@ -6,7 +6,6 @@ angular.module("eCommerce", [
     "localDatabase",
     "localDbService",
     "ngGuid",
-    "headerController",
     "commonService",
     "userController"
 ]);

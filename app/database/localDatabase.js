@@ -68,7 +68,7 @@ angular.module('localDatabase', ['indexedDB'])
                 cartItemStore.createIndex("productId", "productId", {
                     unique: false
                 });
-                cartItemStore.createIndex("userId", "userId", {
+                cartItemStore.createIndex("cartId", "cartId", {
                     unique: false
                 });
                 cartItemStore.transaction.oncomplete = function(event) {
@@ -92,6 +92,18 @@ angular.module('localDatabase', ['indexedDB'])
                 });
                 companyStore.transaction.oncomplete = function(event) {
                     console.log("companyStore was successfuly created!!");
+                }
+
+
+                var userStore = db.createObjectStore("carts", {
+                    keyPath: "id"
+                });
+                userStore.createIndex("userId", "userId", {
+                    unique: false
+                });
+
+                companyStore.transaction.oncomplete = function(event) {
+                    console.log("cart store was created successfuly!!");
                 }
 
 
