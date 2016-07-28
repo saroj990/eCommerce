@@ -21,9 +21,11 @@
                     
                       {{product.likes}}                     
                 </span>
-                                <button class="btn pull-right btn-primary btn-xs" ng-click="addToCart(product.id,currentUser())">
-                                    <i class="glyphicon glyphicon-shopping-cart"></i> Add to Cart
-                                </button>
+                                <span ng-click="addToCart(product.id,currentUser())" class="clickable">
+                                 <img src="assets/images/cart1.png"  height="35" width="35" >
+                                <a href="#"> AddToCart</a>
+                               </span>
+
                             </div>
                         </div>
                     </div>
