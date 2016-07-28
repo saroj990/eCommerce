@@ -1,31 +1,35 @@
-<div class="container-fluid">
-  <table class="table">
-    <thead>
-    </thead>
-    <tbody>
-      <tr ng-repeat="item in cartItems" class="margin-top">
-        <td><img ng-src="{{item.imageUrl}}" height="50" width="50"></td>
-        <td>{{item.name}}</td>
-        <td>
-          <select class="form-control flat-text-box cart-drop-down" ng-model="item.quantity" ng-change="reCalculateTotalPrice(item.quantity)">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-          </select>
-        </td>
-        <td> {{(item.price* item.quantity)| currency:'&#8360'}}
-        </td>
-        <td>
-          Total
-        </td>
-      </tr>
-      <tr>
-        <td colspan="4"></td>
-        <td>Total:{{totalCartPrice}}</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="conatiner-fluid">
+    <table class="table" ng-show="cartItems.length">
+        <thead>
+            <tr>
+                <td>ITEM</td>
+                <td>NAME</td>
+                <td>QUANTITY</td>
+                <td>PRICE</td>
+                <td>SUBTOTAL</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in cartItems" class="margin-top">
+                <td><img ng-src="{{item.imageUrl}}" height="50" width="50"></td>
+                <td>{{item.name}}</td>
+                <td>
+                    <input type="text" class="form-control flat-text-box cart-drop-down" ng-model="item.quantity" ng-keyup="reCalculateTotalPrice()
+">
+                </td>
+                <td> {{item.price| currency:'&#8360'}}
+                </td>
+                <td>
+                    {{(item.price* item.quantity)| currency:'&#8360'}}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4"></td>
+                <td>Estimated Total: {{totalCartPrice| currency:'&#8360'}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="alert alert-info" ng-hide="cartItems.length">
+        You have no item in your cart.
+    </div>
 </div>
