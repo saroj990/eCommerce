@@ -4,7 +4,7 @@
  * @createdOn 2/07/2015
  */
 angular.module('commonService', []).
-factory("commonService", ["localDbService", "$location", function (localDbService, $location) {
+factory("commonService", ["localDbService", "$location","$q", function (localDbService, $location,$q) {
 
   var setLocalItem = function (key, value) {
     localStorage.setItem(key, value);
@@ -25,11 +25,29 @@ factory("commonService", ["localDbService", "$location", function (localDbServic
     localStorage.removeItem(key);
   }
 
+  var initializeTotalCartItems = function(){
+    var deferred =  $q.defer();
+      var cartId = getLocalItem("cartId");
+      if(!cartId){
+        deferred.resolve(0);
+      }
+   
+      localDbService.getTotalCartItem().then(function(response){
+        debugger;
+        deferred.resolve(response);
+      },function(error){
+        console.log(error);
+        deferred.reject(error);
+      });
+    return deferred.promise;      
+    }
+
   return {
     setLocalItem: setLocalItem,
     getLocalItem: getLocalItem,
     redirectToUrl: redirectToUrl,
-    deleteLocalItem: deleteLocalItem
+    deleteLocalItem: deleteLocalItem,
+    initializeTotalCartItems: initializeTotalCartItems
   };
 
 }]);

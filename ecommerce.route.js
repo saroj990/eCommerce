@@ -25,6 +25,10 @@ config(['$routeProvider', function($routeProvider) {
             controller: "cartCtrl",
             templateUrl: "app/partials/cart.html"
         })
+        .when("/:id/productDetail",{
+            controller: "productCtrl",
+            templateUrl: "app/partials/productDetail.html"
+        })
         .otherwise({
             redirectTo: '/index'
         });

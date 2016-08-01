@@ -208,7 +208,8 @@ factory("localDbService", ["$indexedDB", "$q", "$log", "Guid", "$timeout", funct
   }
   var getTotalCartItem = function (cartId) {
     var deffered = $q.defer()
-    findItem("cartItems", "cartId", cartId).then(function (response) {
+    getAllElements("cartItems").then(function (response) {
+        debugger;
         console.log("total cart item");
         console.log(response)
         deffered.resolve(response.length);
@@ -220,6 +221,45 @@ factory("localDbService", ["$indexedDB", "$q", "$log", "Guid", "$timeout", funct
     return deffered.promise;
   }
 
+  var deleteItem =  function(storeName,key){
+    var deferred = $q.defer();
+    $indexedDB.openStore(storeName,function(store){
+      store.delete(key).then(function(response){
+        console.log("item deleted");
+        console.log(response);
+        deferred.resolve(response);
+      },function(error){
+        console.log("error while deleting item");
+        deferred.reject(error)
+      })
+    });
+    return deferred.promise;
+  }
+
+  var removeCartItem = function(id){
+    var deferred = $q.defer();
+    deleteItem("cartItems",id).then(function(response){
+      console.log("cart item deleted");
+      deferred.resolve(response);
+    },function(error){
+      console.log("error while deleting cart item");
+      deferred.reject(error);
+    })
+    return deferred.promise;
+
+  }
+
+  var getAllElements = function(storeName){
+    var deferred = $q.defer();
+    $indexedDB.openStore(storeName,function(store){
+      store.getAll().then(function(response){
+        deferred.resolve(response);
+      },function(error){
+        deferred.reject(error);
+      })
+    });
+    return deferred.promise;
+  }
 
   return {
     addNewProduct: addNewProduct,
@@ -231,6 +271,8 @@ factory("localDbService", ["$indexedDB", "$q", "$log", "Guid", "$timeout", funct
     checkIfCartExist: checkIfCartExist,
     addSampleProducts: addSampleProducts,
     getProduct: getProduct,
-    getTotalCartItem: getTotalCartItem
+    getTotalCartItem: getTotalCartItem,
+    removeCartItem: removeCartItem,
+    getAllElements: getAllElements
   }
 }])

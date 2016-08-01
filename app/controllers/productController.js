@@ -1,13 +1,22 @@
 angular.module("productController", []).
-controller("productCtrl", ["$scope", "$rootScope", "productService", "localDbService", "commonService", "$log",
-    function ($scope, $rootScope, productService, localDbService, commonService, $log) {
+controller("productCtrl", ["$scope", "$rootScope", "productService", "localDbService", "commonService", "$log","$routeParams",
+    function ($scope, $rootScope, productService, localDbService, commonService, $log,$routeParams) {
 
     $scope.product = {}
     $rootScope.totalCartItems = 0;
 
     var getProducts = function () {
-      productService.getProducts().then(function (response) {
-        $scope.products = response.data;
+      productService.getProductsFromDB().then(function (response) {
+        $scope.products = response;
+      })
+    }
+
+    var initializeCartItems = function(){
+      commonService.initializeTotalCartItems().then(
+        function(response){
+          $rootScope.totalCartItems = response
+      },function(error){
+        console.log(error);
       })
     }
 
@@ -25,9 +34,13 @@ controller("productCtrl", ["$scope", "$rootScope", "productService", "localDbSer
     }
 
     $scope.addToCart = function (productId, userId) {
+      debugger;
       localDbService.creatCartLineItem($rootScope.cartId, productId).then(
         function (response) {
+          debugger;
+          console.clear();
           $log.info("item added to cart");
+          ++$rootScope.totalCartItems;
         },
         function (error) {
           $log.error(error);
@@ -46,5 +59,6 @@ controller("productCtrl", ["$scope", "$rootScope", "productService", "localDbSer
     }
     addSampleProducts();
     getProducts();
+    initializeCartItems();
 
     }]);

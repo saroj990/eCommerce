@@ -12,10 +12,15 @@
         <tbody>
             <tr ng-repeat="item in cartItems" class="margin-top">
                 <td><img ng-src="{{item.imageUrl}}" height="50" width="50"></td>
-                <td>{{item.name}}</td>
                 <td>
-                    <input type="text" class="form-control flat-text-box cart-drop-down" ng-model="item.quantity" ng-keyup="reCalculateTotalPrice()
-">
+                    <span>{{item.name}}</span>
+                    <p ng-click="removeItem(item.id,$index)" class="clickable">
+                        <img src="assets/images/delete.png"  height="25" width="25">
+                        Remove
+                    </p>
+                </td>
+                <td>
+                    <input type="text" class="form-control flat-text-box cart-drop-down" ng-model="item.quantity" ng-keyup="reCalculateTotalPrice()">
                 </td>
                 <td> {{item.price| currency:'&#8360'}}
                 </td>

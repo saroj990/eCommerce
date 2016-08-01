@@ -28,8 +28,7 @@ factory("productService", ["$http", "localDbService", "$log", "$q", function ($h
     localDbservice.getProduct(id).then(
       function (response) {
         console.log("product service");
-        console.log(response);
-        debugger
+        console.log(response);      
         deferred.resolve(response);
       },
       function (error) {
@@ -38,9 +37,21 @@ factory("productService", ["$http", "localDbService", "$log", "$q", function ($h
     return deferred.promise;
   }
 
+  var getProductsFromDB = function(){
+    var deferred =  $q.defer();
+    localDbservice.getAllElements("products").then(function(response){
+      deferred.resolve(response);
+    },function(error){
+      deferred.reject(error);
+    });
+    return deferred.promise;
+  }
+
   return {
     addSampleProduct: addSampleProduct,
     getProducts: getProducts,
-    getProduct: getProduct
+    getProduct: getProduct,
+    getProductsFromDB: getProductsFromDB
+
   }
 }]);

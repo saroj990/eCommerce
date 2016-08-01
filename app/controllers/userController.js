@@ -49,6 +49,7 @@ controller("userCtrl", ["$scope", "localDbService", "commonService", "$log", "$r
         commonService.deleteLocalItem('userId');
         commonService.deleteLocalItem('cartId');
         commonService.deleteLocalItem('productImported')
+        $rootScope.totalCartItems = 0;
     }
 
     var createSession = function(userId) {
