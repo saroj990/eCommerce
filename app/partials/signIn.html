@@ -20,6 +20,7 @@
         </div>
         <div class="field margin-top">
             <input type="submit" value="Sign In" ng-click="signInForm.$valid && signIn()" class="btn btn-info">
+            <span class="login-error" ng-show="showLoginError">Invalid credentials</span>
         </div>
     </form>
 </div>

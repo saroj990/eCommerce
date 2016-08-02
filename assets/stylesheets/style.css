@@ -124,6 +124,12 @@
 a:link .no-text-decoration {
     text-decoration: none;
 }
+
 nav.navbar.navbar-custom {
     background: #d0e5f1;
+}
+
+.login-error {
+    font-size: 15px;
+    color: red;
 }

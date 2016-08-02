@@ -1,4 +1,4 @@
-<div class="conatiner-fluid">
+<div class="container-fluid">
     <table class="table" ng-show="cartItems.length">
         <thead>
             <tr>
@@ -15,8 +15,7 @@
                 <td>
                     <span>{{item.name}}</span>
                     <p ng-click="removeItem(item.id,$index)" class="clickable">
-                        <img src="assets/images/delete.png"  height="25" width="25">
-                        Remove
+                        <img src="assets/images/delete.png" height="25" width="25"> Remove
                     </p>
                 </td>
                 <td>
@@ -34,7 +33,12 @@
             </tr>
         </tbody>
     </table>
+
     <div class="alert alert-info" ng-hide="cartItems.length">
         You have no item in your cart.
+
+    </div>
+    <div class="margin-top">
+        <a href="#/index" class="btn btn-success pull-right">Home</a>
     </div>
 </div>
