@@ -133,3 +133,23 @@ nav.navbar.navbar-custom {
     font-size: 15px;
     color: red;
 }
+
+.margin-right {
+    margin-right: 10px;
+}
+
+.display-inline {
+    display: inline;
+}
+
+.regular-button {
+    width: 100px;
+}
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+form.left-align {
+    width: 350px;
+}

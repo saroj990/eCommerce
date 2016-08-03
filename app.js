@@ -8,5 +8,6 @@ angular.module("eCommerce", [
     "ngGuid",
     "commonService",
     "userController",
-    "cartService"
+    "cartService",
+    "appConfig"
 ]);

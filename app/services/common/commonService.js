@@ -26,11 +26,23 @@ factory("commonService", ["localDbService", "$location", "$q", function(localDbS
     var deleteLocalItem = function(key) {
         localStorage.removeItem(key);
     }
+    var isUserLoggedIn = function() {
+        var userId = localStorage.getItem("userId");
+        var isAlive = localStorage.getItem("isAlive");
+        if (userId && isAlive) {
+            return true;
+        } else {
+            return false
+        }
+    }
+
     return {
         setLocalItem: setLocalItem,
         getLocalItem: getLocalItem,
         redirectToUrl: redirectToUrl,
-        deleteLocalItem: deleteLocalItem
+        deleteLocalItem: deleteLocalItem,
+        isUserLoggedIn: isUserLoggedIn
+
     };
 
 }]);

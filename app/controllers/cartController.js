@@ -8,17 +8,6 @@ controller("cartCtrl", ["$scope", "localDbService", "$log",
         var cartItems = [];
         $scope.totalCartItems = 0;
 
-        var getCartItems = function(cartId) {
-            localDbService.getCartItems(cartId).then(
-                function(response) {
-                    formatCartItems(response);
-                },
-                function(error) {
-                    $log.error(error);
-                })
-        }
-
-        getCartItems($scope.cartId);
         $scope.removeItem = function(id, index) {
             if (id) {
                 localDbService.removeCartItem(id).then(function(response) {
@@ -72,9 +61,17 @@ controller("cartCtrl", ["$scope", "localDbService", "$log",
         }
 
         var initializeCartItems = function() {
-            cartService.getTotalCartItemFromDB().then(
+            var cartId = commonService.getLocalItem("cartId");
+            if (!cartId) {
+                return;
+            }
+
+            localDbService.getCartItems(cartId).then(
                 function(response) {
-                    $scope.totalCartItems = response
+                    if (response && response.length) {
+                        $scope.totalCartItems = response.length
+                        formatCartItems(response);
+                    }
                 },
                 function(error) {
                     console.log(error);

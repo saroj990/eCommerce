@@ -1,12 +1,13 @@
 angular.module("productController", []).
-controller("productCtrl", ["$scope", "$rootScope", "productService", "localDbService", "commonService", "$log", "$routeParams", "cartService",
-    function($scope, $rootScope, productService, localDbService, commonService, $log, $routeParams, cartService) {
+controller("productCtrl", ["$scope", "$rootScope", "productService", "localDbService", "commonService", "$log", "$routeParams", "cartService", "$timeout",
+    function($scope, $rootScope, productService, localDbService, commonService, $log, $routeParams, cartService, $timeout) {
 
         $scope.product = {}
 
         var getProducts = function() {
             productService.getProductsFromDB().then(function(response) {
                 $scope.products = response;
+                $rootScope.$broadcast('refreshCartElement', true);
             })
         }
 
@@ -34,7 +35,7 @@ controller("productCtrl", ["$scope", "$rootScope", "productService", "localDbSer
         }
 
         $scope.addToCart = function(productId, userId) {
-            var cartId = commonService.getLocaItem('cartId');
+            var cartId = commonService.getLocalItem('cartId');
             if (!cartId) {
                 return
             }
@@ -49,10 +50,10 @@ controller("productCtrl", ["$scope", "$rootScope", "productService", "localDbSer
         };
 
         var addSampleProducts = function() {
-            if (!localStorage.getItem("productImported")) {
+            if (!localStorage.getItem("importComplete")) {
                 productService.addSampleProduct().then(function(response) {
                     $log.info("products were added successfully!!")
-                    commonService.setLocalItem("productImported", true);
+                    commonService.setLocalItem("importComplete", true);
                 }, function(error) {
                     $log.error(error);
                 })
@@ -61,7 +62,9 @@ controller("productCtrl", ["$scope", "$rootScope", "productService", "localDbSer
 
         addSampleProducts();
         getProducts();
-        initializeCartItems();
+        $timeout(function() {
+            getProducts();
+        }, 5000)
 
     }
 ]);

@@ -26,12 +26,15 @@ factory("localDbService", ["$indexedDB", "$q", "$log", "Guid", "$timeout", funct
         $indexedDB.openStore("users", function(store) {
             return findItem("users", "email", user.email).then(
                 function(response) {
-                    $log.info("authenticate user");
-                    $log.info(response);
-                    deferred.resolve(response);
+                    if (response && response.length) {
+                        if (response[0].password == user.password) {
+                            deferred.resolve(response[0]);
+                        }
+                    }
+                    deferred.resolve(false);
                 },
                 function(error) {
-                    deferred.resolve(error);
+                    deferred.reject(error);
                 });
         });
         return deferred.promise;
@@ -39,16 +42,15 @@ factory("localDbService", ["$indexedDB", "$q", "$log", "Guid", "$timeout", funct
 
     //Finds item by store name,key name and key value provided
     function findItem(storeName, keyName, KeyValue) {
+        debugger
         try {
             var deferred = $q.defer();
             if (!storeName || !keyName || !KeyValue) {
-                deferred.resolve(null);
+                deferred.resolve([]);
             }
             $indexedDB.openStore(storeName, function(store) {
                 store.findWhere(store.query().$index(keyName).$eq(KeyValue)).then(
                     function(data) {
-                        $log.info("result from find method");
-                        $log.info(data);
                         deferred.resolve(data);
 
                     },
@@ -100,6 +102,8 @@ factory("localDbService", ["$indexedDB", "$q", "$log", "Guid", "$timeout", funct
 
         findItem("cartItems", "cartId", cartId).then(
             function(items) {
+                console.log("cart items based on cartId items=")
+                console.log(items)
                 deferred.resolve(items);
             },
             function(error) {
@@ -114,7 +118,7 @@ factory("localDbService", ["$indexedDB", "$q", "$log", "Guid", "$timeout", funct
 
         findItem("carts", "userId", userId).then(
             function(items) {
-                if (items.count) {
+                if (items && items.length) {
                     status = true
                 }
                 deferred.resolve(status);
@@ -177,6 +181,7 @@ factory("localDbService", ["$indexedDB", "$q", "$log", "Guid", "$timeout", funct
 
     //Find a record based ob id value
     function findItemById(objectStoreName, id) {
+        debugger
         try {
             var deferred = $q.defer();
             $indexedDB.openStore(objectStoreName, function(store) {
@@ -206,20 +211,7 @@ factory("localDbService", ["$indexedDB", "$q", "$log", "Guid", "$timeout", funct
             })
         return deferred.promise;
     }
-    var getTotalCartItem = function(cartId) {
-        var deffered = $q.defer()
-        getAllElements("cartItems").then(function(response) {
-                debugger;
-                console.log("total cart item");
-                console.log(response)
-                deffered.resolve(response.length);
-            },
-            function(error) {
-                console.log(error);
-                deffered.reject(error);
-            })
-        return deffered.promise;
-    }
+
 
     var deleteItem = function(storeName, key) {
         var deferred = $q.defer();
@@ -271,8 +263,9 @@ factory("localDbService", ["$indexedDB", "$q", "$log", "Guid", "$timeout", funct
         checkIfCartExist: checkIfCartExist,
         addSampleProducts: addSampleProducts,
         getProduct: getProduct,
-        getTotalCartItem: getTotalCartItem,
         removeCartItem: removeCartItem,
-        getAllElements: getAllElements
+        getAllElements: getAllElements,
+        findItemById: findItemById,
+        findItem: findItem
     }
 }])

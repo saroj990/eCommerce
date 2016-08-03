@@ -13,6 +13,9 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
+                    <a href="#/index"><img ng-src="assets/images/home.png" height="25px" /></a>
+                </li>
+                <li>
                     <a href="#/cartItems"><img ng-src="assets/images/cart.png" height="25px" />({{totalCartItems}})</a>
                 </li>
                 <li ng-hide="isSessionExist()">
@@ -22,8 +25,8 @@
                     <a href="#/signUp">Sign Up</a>
                 </li>
                 <li class="dropdown" ng-show="isSessionExist()">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                       Hello,Guest<span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle capitalize " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                       Hello,{{currentUser? (currentUser.firstName ): 'Guest'}}<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">Edit profile</a></li>
                         <li><a href="#">Cart</a></li>

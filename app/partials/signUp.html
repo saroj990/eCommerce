@@ -1,52 +1,53 @@
 <div class="container-fluid">
-  <form name="signUpForm" novalidate="" class="left-align">
-    <div class="field">
-      <label class="thin-text">First Name</label>
-      <input type="text" name="firstName" ng-model="user.firstName" placeholder="First Name" class="form-control flat-text-box" required>
-      <span ng-if="signUpForm.firstName.$touched || signUpForm.$submitted">
+    <form name="signUpForm" novalidate="" class="left-align">
+        <div class="alert alert-info">You need to sign Up before you continue!!</div>
+        <div class="field">
+            <label class="thin-text">First Name</label>
+            <input type="text" name="firstName" ng-model="user.firstName" placeholder="First Name" class="form-control flat-text-box" required>
+            <span ng-if="signUpForm.firstName.$touched || signUpForm.$submitted">
           <span ng-if="signUpForm.firstName.$error.required"  class="error">
               First Name is required
           </span>
-      </span>
-    </div>
-    <div class="field">
-      <label class="thin-text">Last Name</label>
-      <input type="text" name="lastName" ng-model="user.lastName" placeholder="Last Name" class="form-control flat-text-box" required>
-      <span ng-if="signUpForm.lastName.$touched || signUpForm.$submitted">
+            </span>
+        </div>
+        <div class="field">
+            <label class="thin-text">Last Name</label>
+            <input type="text" name="lastName" ng-model="user.lastName" placeholder="Last Name" class="form-control flat-text-box" required>
+            <span ng-if="signUpForm.lastName.$touched || signUpForm.$submitted">
           <span ng-if="signUpForm.lastName.$error.required"  class="error">
               Last Name is required
           </span>
-      </span>
-    </div>
-    <div class="field">
-      <label class="thin-text">Email</label>
-      <input type="text" name="email" ng-model="user.email" placeholder="Email" class="form-control flat-text-box" required>
-      <span ng-if="signUpForm.email.$touched || signUpForm.$submitted">
+            </span>
+        </div>
+        <div class="field">
+            <label class="thin-text">Email</label>
+            <input type="text" name="email" ng-model="user.email" placeholder="Email" class="form-control flat-text-box" required>
+            <span ng-if="signUpForm.email.$touched || signUpForm.$submitted">
         <span ng-if="signUpForm.email.$error.required"  class="error">
             Email is required
         </span>
-      </span>
-    </div>
-    <div class="field">
-      <label class="thin-text">Password</label>
-      <input type="password" name="password" ng-model="user.password" placeholder="Password" class="form-control flat-text-box" required>
-      <span ng-if="signUpForm.password.$touched || signUpForm.$submitted">
+            </span>
+        </div>
+        <div class="field">
+            <label class="thin-text">Password</label>
+            <input type="password" name="password" ng-model="user.password" placeholder="Password" class="form-control flat-text-box" required>
+            <span ng-if="signUpForm.password.$touched || signUpForm.$submitted">
           <span ng-if="signUpForm.password.$error.required"  class="error">
               Password is required
           </span>
-      </span>
-    </div>
-    <div class="field">
-      <label class="thin-text">Confirm Password</label>
-      <input type="password" name="confirmPassword" ng-model="confirmPassword" placeholder=" Retype Password " class="form-control flat-text-box" required>
-      <span ng-if="signUpForm.confirmPassword.$touched || signUpForm.$submitted">
+            </span>
+        </div>
+        <div class="field">
+            <label class="thin-text">Confirm Password</label>
+            <input type="password" name="confirmPassword" ng-model="confirmPassword" placeholder=" Retype Password " class="form-control flat-text-box" required>
+            <span ng-if="signUpForm.confirmPassword.$touched || signUpForm.$submitted">
           <span ng-if="signUpForm.confirmPassword.$error.required"  class="error">
               Password is required
           </span>
-      </span>
-    </div>
-    <div class="field margin-top">
-      <input type="submit" value="Sign Up" ng-click="signUpForm.$valid && signUp()" class="btn btn-primary">
-    </div>
-  </form>
+            </span>
+        </div>
+        <div class="field margin-top">
+            <input type="submit" value="Sign Up" ng-click="signUpForm.$valid && signUp()" class="btn btn-primary">
+        </div>
+    </form>
 </div>

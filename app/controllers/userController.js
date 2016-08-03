@@ -6,17 +6,19 @@ controller("userCtrl", ["$scope", "localDbService", "commonService", "$log", "$r
         $scope.showLoginError = false;
         $scope.signIn = function() {
             localDbService.authenticateUser($scope.user).then(function(response) {
-                    if (!response.length) {
+                    console.log(response)
+                    if (!response) {
                         $scope.showLoginError = true
                         return;
                     }
                     $scope.showLoginError = false;
-                    createSession(response[0].id);
+                    createSession(response.id);
+                    var userId = getUserId();
 
-                    localDbService.checkIfCartExist(response[0].id).then(function(status) {
-                        if (!status) {
-                            debugger
-                            createCart(currentUser());
+                    localDbService.checkIfCartExist(response.id).then(function(status) {
+                        if (!status && userId) {
+                            createCart(userId);
+                            getUserInfo();
                         }
                         commonService.redirectToUrl("/index");
                     }, function(error) {
@@ -45,9 +47,8 @@ controller("userCtrl", ["$scope", "localDbService", "commonService", "$log", "$r
         $scope.logOut = function() {
             commonService.deleteLocalItem('isAlive');
             commonService.deleteLocalItem('userId');
-            commonService.deleteLocalItem('cartId');
-            commonService.deleteLocalItem('productImported');
-            localStorage.removeItem('productImported');
+            commonService.deleteLocalItem('importComplete');
+            localStorage.removeItem('importComplete');
             $scope.totalCartItems = 0;
         }
 
@@ -56,9 +57,8 @@ controller("userCtrl", ["$scope", "localDbService", "commonService", "$log", "$r
             commonService.setLocalItem("isAlive", true);
         }
 
-        var currentUser = function() {
-            $scope.currentUser = commonService.getLocalItem("userId");
-            return $scope.currentUser;
+        var getUserId = function() {
+            return commonService.getLocalItem("userId");
         }
         var createCart = function(userId) {
             $log.info("Before create cart:" + userId)
@@ -71,8 +71,12 @@ controller("userCtrl", ["$scope", "localDbService", "commonService", "$log", "$r
         }
 
         var getTotalCartItem = function(cartId) {
-            cartService.getTotalCartItemFromDB(cartId).then(function(response) {
-                    $scope.totalCartItems = response
+            localDbService.getCartItems(cartId).then(function(response) {
+                    console.log("user controller get total cart item");
+                    console.log(response);
+                    if (response.length) {
+                        $scope.totalCartItems = response.length
+                    }
                 },
                 function(error) {
                     $log.error(error);
@@ -80,14 +84,31 @@ controller("userCtrl", ["$scope", "localDbService", "commonService", "$log", "$r
         }
 
         var initializeCartItem = function() {
+            debugger
             var cartId = commonService.getLocalItem("cartId");
-            if (cartId && currentUser()) {
+            if (cartId && getUserId()) {
                 getTotalCartItem(cartId);
             } else {
                 $scope.totalCartItems = 0;
             }
         }
-        initializeCartItem();
+
+        var getUserInfo = function() {
+            var userId = commonService.getLocalItem("userId");
+            if (!userId) {
+                return
+            }
+
+            localDbService.findItemById("users", userId).then(function(user) {
+                $scope.currentUser = user;
+                initializeCartItem();
+
+            }, function(error) {
+                console.log(error);
+            })
+        }
+
+        getUserInfo();
 
         $rootScope.$on('refreshCartElement', function(args) {
             initializeCartItem();

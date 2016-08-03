@@ -7,25 +7,24 @@
                         <img ng-src="{{product.imageUrl}}" alt="...">
                         <div class="caption">
                             <span class="row">
-                <span>{{product.name}}</span>
+                              <span>{{product.name}}</span>
                             <span class="blue">{{ product.price | currency:'&#8360' }}</span>
                             </span>
                             <div class="small-padding">
                                 <span>
-                  <a href="#/{{product.id}}/productDetail" class="glyphicon glyphicon-eye-open">
-                  </a>
-                  View
-                </span>
+                                <a href="#/{{product.id}}/productDetail" class="glyphicon glyphicon-eye-open">
+                                </a>
+                                  View
+                              </span>
                                 <span class="padding-left">
-                      <img src="assets/images/likes.png" height="25" width="25">       
-                    
-                      Likes:{{product.likes}}                     
-                </span>
+                                <img src="assets/images/likes.png" height="25" width="25">       
+                              
+                                Likes:{{product.likes}}                     
+                              </span>
                                 <span ng-click="addToCart(product.id,currentUser())" class="clickable">
-                                 <img src="assets/images/cart1.png"  height="35" width="35" >
-                                <a href="#" class="no-text-decora"> Shop</a>
-                               </span>
-
+                                  <img src="assets/images/cart1.png"  height="35" width="35" />
+                                  <span href="#" class="no-text-decoration"> Shop</span>
+                                </span>
                             </div>
                         </div>
                     </div>
